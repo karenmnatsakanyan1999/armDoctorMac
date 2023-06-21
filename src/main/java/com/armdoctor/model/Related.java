@@ -1,15 +1,28 @@
 package com.armdoctor.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import java.io.Serializable;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Entity
-@Table(name = "related")
-public class Related implements Serializable {
-    @Id
-    private Integer user_id;
-    @Id
-    private Integer hospital_id;
-}
+import javax.persistence.*;
+//import java.io.Serializable;
+//
+//@Entity
+//@Table(name = "related")
+//@Data
+//@NoArgsConstructor
+//@AllArgsConstructor
+//public class Related {
+//    @Id
+//    private Integer id;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "user_id")
+//    private DoctorEntity doctorEntity;
+//
+//
+//    @ManyToOne
+//    @JoinColumn(name = "hospital_id")
+//    private HospitalEntity hospitalEntity;
+//
+//}

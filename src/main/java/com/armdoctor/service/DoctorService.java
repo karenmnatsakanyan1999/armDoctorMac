@@ -17,4 +17,6 @@ public interface DoctorService {
     DoctorEntity forgotPassword(String email, String password, String confirmPassword) throws ApiException;
     DoctorEntity update(DoctorDto doctorDto) throws ApiException;
     void delete(Integer id) throws ApiException;
+
+
 }

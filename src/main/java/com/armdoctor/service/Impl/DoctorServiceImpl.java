@@ -18,12 +18,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class DoctorServiceImpl implements DoctorService {
+
+
     @Autowired
     private DoctorRepository doctorRepository;
     @Autowired
@@ -34,6 +34,9 @@ public class DoctorServiceImpl implements DoctorService {
     private PasswordEncoder passwordEncoder;
     @Override
     public DoctorEntity creatUser(DoctorDto dto) throws ApiException {
+
+
+
         DoctorValidation.validateFields(dto);
         DoctorValidation.validatePassword(dto.getPassword());
         validateDuplicate(dto);
@@ -52,17 +55,13 @@ public class DoctorServiceImpl implements DoctorService {
         doctorEntity.setRole(dto.getRole());
         doctorEntity.setProfession(dto.getProfession());
         doctorEntity.setWorkTime(dto.getWorkTime());
-        List<HospitalEntity> hospitalEntities = new ArrayList<>();
-//        for (int i = 0; i < dto.getHospitals().size(); i++) {
-//            String s = dto.getHospitals().get(i);
-//            hospitalEntities.add(hospitalRepository.getByName(s));
-//        }
-//        doctorEntity.setHospitalEntities(hospitalEntities);
+
         try{
             doctorRepository.save(doctorEntity);
         }catch (Exception e){
             throw  new ApiException("problem during saving of user");
         }
+
         mailSender.sendEmail(dto.getEmail(),"your verify code","your verify code "+ verifyCode);
 
         return doctorEntity;
@@ -189,6 +188,14 @@ public class DoctorServiceImpl implements DoctorService {
         doctorEntity.setSurname( doctorDto.getSurname());
         doctorEntity.setYear(doctorDto.getYear());
         doctorEntity.setEmail(doctorDto.getEmail()==null? doctorEntity.getEmail() : doctorDto.getEmail());
+        Set<DoctorEntity> doctorEntitySet = new HashSet<>();
+        doctorEntitySet.add(doctorEntity);
+        Set<HospitalEntity> set = new HashSet<>();
+        List<String> hospitals = doctorDto.getHospitals();
+        HospitalEntity byName = hospitalRepository.getByName(hospitals.get(0));
+        set.add(byName);
+        doctorEntity.setHospitalEntities(set);
+
 
         try {
             doctorRepository.save(doctorEntity);

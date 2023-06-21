@@ -10,8 +10,6 @@ import java.util.Optional;
 @Repository
 public interface DoctorRepository extends JpaRepository<DoctorEntity,Integer> {
     List<DoctorEntity> getByEmail(String email);
-
-
     DoctorEntity getByEmailAndVerifyCode(String email, String verifycode);
 
     DoctorEntity getByEmailAndIdNot(String email, Integer id);
